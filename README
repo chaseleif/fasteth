@@ -1,0 +1,113 @@
+___________
+Chase Phelps
+
+Network Simulation
+
+GNU TCP 'switch' and many processes. Demonstrates usage of multiplexing with select.
+___________
+
+General overview of the two programs included in this project:
+
+The SP launcher forks a variable number of SP processes, each of which can take input and produce a log.
+The SP processes receive data when available and execute commands to either wait for data or attempt to send data.
+Upon connection, each SP notifies the CSP of its SP ID and the number of SP processes.
+Before entering a waiting state, an SP will notify the CSP it will be waiting to prevent some deadlock conditions.
+Upon completion of processing its input file, each SP will notify the CSP it has no more input and remain available to receive data.
+
+The CSP program is ran as a single process. The CSP acts as the switch and controls and forwards traffic between SPs.
+The CSP program receives send requests from SP processes, and responds ok when ready or rejects if busy and the request queue is full.
+Each time a select call returns no ready descriptors, the CSP ensures the sum of waiting and complete SP processes does not equal the total number of SP processes.
+If SP processes are waiting and no others will send data, all SP processes are sent a message to stop waiting.
+Once all SP processes have notified they are finished sending data the CSP will notify all SP processes to terminate the simulation.
+In the CSP loop, a socket is read:
+If it is a new connection, the socket is kept in a list and the SP ID is set to relate the socket to the SP
+If the SP was flagged as waiting, remove the waiting flag
+If the sending SP ID is in the data queue the data frame is forwarded to the receiving SP ID
+Move any possible requests from the request queue to the data queue, on moving send the SP an ACCEPT reply
+If is a request and data can be currently sent reply ACCEPT
+If it is a request and data cannot be currently sent and request queue is not full, add to request queue, no response
+If it is a request and data cannot be currently sent and request queue is full, reply REJECT
+If it is a complete notification, increase completion counter
+If it is a wait notification, flag the SP as waiting
+Once completion counter is the number of SP processes, send a finished notification to all SP processes and exit
+
+___________
+
+Usage instructions and program information:
+
+Makefile commands:
+make clean
+# remove binaries, clear log folder
+make test
+# make test runs "make -j runserver runclient"
+make runserver
+# make runserver runs "./fastserv -p 52528 -out=./logs/server.log
+make runclient
+# make runclient runs "./fastcl -n 32 127.0.0.1:52528 -in=./inputs/input -out=./logs/client
+# update the IP address and port for specific usage
+
+Sample input files and output files are provided in the inputs and logs folders.
+
+___________
+
+.-. .-. .-.
+|   `-. |-'
+`-' `-' '  
+
+# The CSP takes command line arguments:
+-p			specify listen port number, example: -p 52528
+-out=csp	outfile, specify output log file, -out=csp will create csp.log
+# if no output file is specified the CSP prints to stdout
+./csp -p 52528 -out=cspfile
+
+The CSP runs as a single process  simulating a switch, controlling and forwarding traffic.
+The CSP manages the simulation and produces output.
+
+___________
+
+.-. .-.
+`-. |-'
+`-' '  
+
+# The SP launcher takes command line arguments:
+-h		show commands
+-n x		fork X SP processes, to launch 10 SP processes: -n 10
+# the SP IDs are numbered from zero and are used to determine the filenames / socket mapping
+ip:port		set ip and port of CSP, for example: 127.0.0.1:52528
+-in=pref	set input file prefix
+# the prefix must be set for more than 1 SP process to run the simulation
+# each SP will open "pref%d", where %d is the SP ID, the first being "pref0"
+# if no input prefix is set then only 1 SP process will run and input will be stdin
+-out=pref	set output file prefix
+# each SP will write "pref%d.log", the first being "pref0.log"
+# if no output file is specified all SPs will print to stdout
+./sp -n 10 127.0.1.1:52528 -in input_ -out=sp_
+
+The SP will process its input file, send requests to and receive data from the CSP.
+With each line of the input file the SP can be instructed to send a data frame or wait for data frames.
+
+Each SP reads its own input file.
+Empty lines and lines beginning with the '#' symbol are skipped.
+Each input file is read until EOF
+Each frame to be sent is defined after the destination, i.e. "Frame 1 to SP 3 text"
+Text data frames skip the space after the number and consume the remainder of the line.
+To send a file, begin the filename with a '$' symbol, i.e. "Frame 2 to SP 3 $file.txt" (or $./file.txt)
+
+#An example input file with all possible commands
+
+Frame 1, To SP 3 hello text data frame
+Wait for receiving 2 frames
+Frame 2, To SP 1 $dictionary.txt
+Wait for receiving 1 frame
+Frame 3, To SP 1
+# (EOF)
+
+#With the specific parsing used, the required tokens from the above commands are:
+Frame 1,P 3 hello text data frame
+Wait g 2 
+# Each wait command must have a space after the number of frames
+Frame 2,P 1 $dictionary.txt
+Wait g 1 
+Frame 3,P 1
+
+___________

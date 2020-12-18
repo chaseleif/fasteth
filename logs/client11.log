@@ -1,0 +1,55 @@
+SP 11: Frame 1, request to send 1 bytes to SP 8
+SP 11: Received packet 0 (1 bytes) from SP 14
+SP 11: Received ok reply from CSP to send data frame 1 to SP 8
+SP 11: Sent data packet (17 bytes) to SP 8
+SP 11: Frame 2, request to send 1 bytes to SP 15
+SP 11: Received packet 0 (1 bytes) from SP 5
+SP 11: Received packet 0 (1 bytes) from SP 17
+SP 11: Received packet 0 (2 bytes) from SP 6
+SP 11: Received ok reply from CSP to send data frame 2 to SP 15
+SP 11: Sent data packet (17 bytes) to SP 15
+SP 11: Frame 3, request to send 1 bytes to SP 8
+SP 11: Received ok reply from CSP to send data frame 3 to SP 8
+SP 11: Sent data packet (17 bytes) to SP 8
+SP 11: Frame 4, request to send 1 bytes to SP 0
+SP 11: Received packet 0 (1 bytes) from SP 16
+SP 11: Received ok reply from CSP to send data frame 4 to SP 0
+SP 11: Sent data packet (17 bytes) to SP 0
+SP 11: Frame 5, request to send 1 bytes to SP 17
+SP 11: Received ok reply from CSP to send data frame 5 to SP 17
+SP 11: Sent data packet (17 bytes) to SP 17
+SP 11: Frame 6, request to send 1 bytes to SP 5
+SP 11: Received packet 0 (1 bytes) from SP 13
+SP 11: Received ok reply from CSP to send data frame 6 to SP 5
+SP 11: Sent data packet (17 bytes) to SP 5
+SP 11: Frame 7, request to send 1 bytes to SP 0
+SP 11: Received ok reply from CSP to send data frame 7 to SP 0
+SP 11: Sent data packet (17 bytes) to SP 0
+SP 11: Frame 8, request to send 1 bytes to SP 17
+SP 11: Received ok reply from CSP to send data frame 8 to SP 17
+SP 11: Sent data packet (17 bytes) to SP 17
+SP 11: Frame 9, request to send 1 bytes to SP 2
+SP 11: Received packet 0 (1 bytes) from SP 7
+SP 11: Received ok reply from CSP to send data frame 9 to SP 2
+SP 11: Sent data packet (17 bytes) to SP 2
+SP 11: Frame 10, request to send 2 bytes to SP 0
+SP 11: Received ok reply from CSP to send data frame 10 to SP 0
+SP 11: Sent data packet (18 bytes) to SP 0
+SP 11: Frame 11, request to send 2 bytes to SP 17
+SP 11: Received ok reply from CSP to send data frame 11 to SP 17
+SP 11: Sent data packet (18 bytes) to SP 17
+SP 11: Frame 12, request to send 2 bytes to SP 6
+SP 11: Received ok reply from CSP to send data frame 12 to SP 6
+SP 11: Sent data packet (18 bytes) to SP 6
+SP 11: Frame 13, request to send 2 bytes to SP 1
+SP 11: Received packet 0 (2 bytes) from SP 10
+SP 11: Received ok reply from CSP to send data frame 13 to SP 1
+SP 11: Sent data packet (18 bytes) to SP 1
+SP 11: Frame 14, request to send 2 bytes to SP 12
+SP 11: Received ok reply from CSP to send data frame 14 to SP 12
+SP 11: Sent data packet (18 bytes) to SP 12
+SP 11: Notifying CSP ready to quit
+SP 11: Received packet 0 (2 bytes) from SP 1
+SP 11: Received packet 0 (2 bytes) from SP 16
+SP 11: Received valid quit response from CSP
+SP 11: Ending simulation
