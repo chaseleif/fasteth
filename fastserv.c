@@ -420,7 +420,6 @@ int main(int argc, char** argv) {
 								fprintf(outfile,", failed to send acknowledgement\n");
 								dataqueue[dataqindex].src_sp_id=-1;
 							}
-							dataqindex = shiftqueues(requestqueue,dataqueue,sp);
 						}
 					}
 					haddata=1;
